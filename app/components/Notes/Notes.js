@@ -1,11 +1,11 @@
 var React = require('react');
 
-var Repos = React.createClass({
+var Notes = React.createClass({
   render: function() {
     return (
-      <div>Repos</div>
+      <div>Notes</div>
     )
   }
 });
 
-module.exports = Repos;
+module.exports = Notes;
