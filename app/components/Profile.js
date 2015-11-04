@@ -5,8 +5,11 @@ var Repos = require('./Github/Repos');
 var UserProfile = require('./Github/UserProfile');
 var Notes = require('./Notes/Notes');
 
+var Firebase = require('firebase');
+var ReactFireMixin = require('reactfire');
+
 var Profile = React.createClass({
-  mixins: [Router.State], //allows access to URL stateParams
+  mixins: [Router.State, ReactFireMixin], //allows access to URL stateParams
 
   getInitialState: function() {
 
@@ -16,6 +19,20 @@ var Profile = React.createClass({
       repos: []
     }
   },
+
+  //all ajax requests go here, listeners, etc., it's a callback
+  componentDidMount: function() {
+    this.ref = new Firebase('https://tutorialwikireactdemo.firebaseio.com');
+    var childref = this.ref.child(this.props.params.username);
+    this.bindAsArray(childref, 'notes'); //firebase helper
+  },
+
+
+  //
+  componentDidUnmount: function() {
+    this.unbind('notes'); //removes listener
+  },
+
 
   render: function() {
     var username = this.props.params.username;
