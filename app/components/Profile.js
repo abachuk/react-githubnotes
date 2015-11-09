@@ -34,6 +34,11 @@ var Profile = React.createClass({
   },
 
 
+  handleAddNotes: function(newNote) {
+    this.ref.child(this.props.params.username).set(this.state.notes.concat([newNote]))
+  },
+
+
   render: function() {
     var username = this.props.params.username;
     console.log(username);
@@ -46,7 +51,7 @@ var Profile = React.createClass({
         <Repos username={username} repos={this.state.repos} />
       </div>
       <div className="col-md-4">
-        <Notes username={username} notes={this.state.notes} />
+        <Notes username={username} notes={this.state.notes} addNote={this.handleAddNotes} />
       </div>
     </div>
     )
